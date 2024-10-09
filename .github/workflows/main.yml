@@ -1,0 +1,40 @@
+name: Deploy Server Bot
+
+on:
+  workflow_dispatch:  # আপনি চাইলে ম্যানুয়ালি চালানোর জন্য
+
+jobs:
+  run_with_timeout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60  # ১ ঘণ্টার টাইমআউট
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Node.js এর সংস্করণ
+
+      - name: Install npm libraries
+        run: npm install  # npm লাইব্রেরি ইনস্টল করা হচ্ছে
+
+      - name: Run the application
+        run: node index.js  # আপনার অ্যাপ্লিকেশন চালানো হচ্ছে
+
+      - name: Notify Timeout
+        if: ${{ failure() || cancelled() }}  # যদি জবটি টাইমআউট হয়
+        run: |
+          echo "Job timed out. Restarting the job..."
+          echo "RESTART_JOB=true" >> $GITHUB_ENV  # একটি পরিবেশ ভ্যারিয়েবল সেট করুন
+
+  # Second job that runs if the first job is set to restart
+  restart_job:
+    runs-on: ubuntu-latest
+    needs: run_with_timeout
+    if: ${{ env.RESTART_JOB == 'true' }}  # যদি প্রথম জবটি টাইমআউট হয়
+    steps:
+      - name: Restart the job
+        run: |
+          echo "Restarting the job..."
