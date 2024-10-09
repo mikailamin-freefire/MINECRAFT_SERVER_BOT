@@ -12,10 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js (Latest Version)
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Node.js সংস্করণ
+          node-version: 'node'  # সর্বশেষ Node.js সংস্করণ (latest version)
 
       - name: Install npm libraries
         run: npm install  # NPM লাইব্রেরি ইনস্টল
