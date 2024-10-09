@@ -1,0 +1,17 @@
+{
+  "name": "minecraft",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [],
+  "author": "MIKAILAMIN",
+  "license": "ISC",
+  "description": "This is a simple ai bot for keep your server alive for all time.",
+  "dependencies": {
+    "mineflayer": "^4.20.1",
+    "mineflayer-auto-auth": "^2.0.0",
+    "mineflayer-pvp": "^1.3.2"
+  }
+}
