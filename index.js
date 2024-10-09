@@ -10,17 +10,11 @@ const AutoAuth = require('mineflayer-auto-auth');
 const app = express();
 app.use(express.json());
 
-app.get("/", (_, res) => res.send("Bot is now starting..."));
-app.listen(process.env.PORT);
-
 const server_ip = 'mikailserver.aternos.me';
 const server_port = 30505;
 const bot_username = 'Minecraft_AI';
 
 function initialize_bot() {
-    app.get("/", (_, res) => res.send("Bot Joining..."));
-    app.listen(process.env.PORT);
-    
     const bot = mineflayer.createBot({
         host: server_ip, 
         version: false,
