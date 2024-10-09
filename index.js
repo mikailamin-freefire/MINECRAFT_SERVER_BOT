@@ -30,7 +30,7 @@ function initialize_bot() {
         const app = express();
         app.use(express.json());
         app.get("/", (_, res) => res.send("Server bot is now live"));
-        app.listen(process.env.PORT);
+        app.listen(process.env.SERVER_PORT);
         
     });
 
