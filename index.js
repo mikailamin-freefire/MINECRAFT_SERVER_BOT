@@ -1,6 +1,7 @@
 const mineflayer = require('mineflayer');
 const AutoAuth = require('mineflayer-auto-auth');
 const pvp = require('mineflayer-pvp').plugin;
+const express = require("express");
 
 const server_ip = process.env.SERVER_IP;
 const server_port = process.env.SERVER_PORT;
@@ -17,7 +18,6 @@ function initialize_bot() {
     });
 
     bot.loadPlugin(pvp);
-    bot.loadPlugin(pathfinder);
 
     bot.on('physicTick', () => {
         const filter = entity => entity.type === 'mob' && (entity.displayName === 'Zombie' || entity.displayName === 'Creeper' || entity.displayName === 'Skeleton' || entity.displayName === 'Spider');
@@ -27,6 +27,11 @@ function initialize_bot() {
 
     bot.on('login', () => {
         console.log("Congratulations, your bot has been logged in to the server!");
+        const app = express();
+        app.use(express.json());
+        app.get("/", (_, res) => res.send("Server bot is now live"));
+        app.listen(process.env.PORT);
+        
     });
 
     bot.on('end', () => {
