@@ -17,7 +17,6 @@ function initialize_bot() {
     });
 
     bot.loadPlugin(pvp);
-    bot.loadPlugin(pathfinder);
 
     bot.on('physicTick', () => {
         const filter = entity => entity.type === 'mob' && (entity.displayName === 'Zombie' || entity.displayName === 'Creeper' || entity.displayName === 'Skeleton' || entity.displayName === 'Spider');
