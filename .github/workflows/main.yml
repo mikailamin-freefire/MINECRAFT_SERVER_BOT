@@ -1,7 +1,7 @@
 name: Deploy Server Bot
 
 on:
-  workflow_dispatch:  # ম্যানুয়ালি চালু করার জন্য
+  workflow_dispatch:  # ম্যানুয়ালি চালানোর জন্য
 
 jobs:
   run_with_timeout:
@@ -21,28 +21,23 @@ jobs:
         run: npm install  # NPM লাইব্রেরি ইনস্টল
 
       - name: Run the application
-        id: run_app  # ID সেট করা
+        id: run_app  # স্টেপের ID
         run: node index.js  # অ্যাপ্লিকেশন চালানো
 
-      - name: Notify Timeout
-        if: ${{ failure() || cancelled() }}  # যদি জবটি টাইমআউট হয়
-        run: |
-          echo "Job timed out. Restarting the job..."
-        outputs:
-          restart_job: true  # Output এ restart_job সেট করা
+      - name: Set job to restart on failure or timeout
+        if: ${{ failure() || cancelled() }}  # যদি জবটি ব্যর্থ হয় বা টাইমআউট হয়
+        run: echo "::set-output name=restart_job::true"  # আউটপুট সেট করা হচ্ছে
 
-      - name: Set output on success
-        if: ${{ success() }}  # সফল হলে output false করে দেওয়া
-        run: echo "RESTART_JOB=false" >> $GITHUB_ENV
-        outputs:
-          restart_job: false  # Output এ restart_job false করে দেওয়া হচ্ছে
+      - name: Set job not to restart on success
+        if: ${{ success() }}  # সফল হলে
+        run: echo "::set-output name=restart_job::false"  # আউটপুট false করা হচ্ছে
 
   restart_job:
     runs-on: ubuntu-latest
     needs: run_with_timeout
-    if: ${{ needs.run_with_timeout.outputs.restart_job == 'true' }}  # Output থেকে restart_job যাচাই করা হচ্ছে
+    if: ${{ needs.run_with_timeout.outputs.restart_job == 'true' }}  # Output যাচাই করা হচ্ছে
     steps:
       - name: Restart the job
         run: |
           echo "Restarting the job..."
-          # এখানে পুনরায় শুরু করার জন্য কাজগুলি করা হবে
+          # পুনরায় শুরু করার জন্য এখানে প্রয়োজনীয় কাজগুলো করা হবে
