@@ -7,6 +7,11 @@ const server_ip = process.env.SERVER_IP;
 const server_port = process.env.SERVER_PORT;
 const bot_username = process.env.BOT_USERNAME;
 
+const app = express();
+        app.use(express.json());
+        app.get("/", (_, res) => res.send("Server bot is now live"));
+        app.listen(process.env.SERVER_PORT);
+
 function initialize_bot() {
     const bot = mineflayer.createBot({
         host: server_ip,
@@ -27,11 +32,6 @@ function initialize_bot() {
 
     bot.on('login', () => {
         console.log("Congratulations, your bot has been logged in to the server!");
-        const app = express();
-        app.use(express.json());
-        app.get("/", (_, res) => res.send("Server bot is now live"));
-        app.listen(process.env.SERVER_PORT);
-        
     });
 
     bot.on('end', () => {
