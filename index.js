@@ -2,9 +2,9 @@ const mineflayer = require('mineflayer');
 const AutoAuth = require('mineflayer-auto-auth');
 const pvp = require('mineflayer-pvp').plugin;
 
-const server_ip = process.env.SERVER_IP;
-const server_port = process.env.SERVER_PORT;
-const bot_username = process.env.BOT_USERNAME;
+const server_ip = "mikailserver.aternos.me";
+const server_port = 30505;
+const bot_username = "MINECRAFT_AI";
 
 function initialize_bot() {
     const bot = mineflayer.createBot({
