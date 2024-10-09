@@ -2,9 +2,9 @@ const mineflayer = require('mineflayer');
 const AutoAuth = require('mineflayer-auto-auth');
 const pvp = require('mineflayer-pvp').plugin;
 
-const server_ip = "mikailserver.aternos.me";
-const server_port = 30505;
-const bot_username = "MINECRAFT_AI";
+const server_ip = process.env.SERVER_IP;
+const server_port = process.env.SERVER_PORT;
+const bot_username = process.env.BOT_USERNAME;
 
 function initialize_bot() {
     const bot = mineflayer.createBot({
@@ -17,6 +17,7 @@ function initialize_bot() {
     });
 
     bot.loadPlugin(pvp);
+    bot.loadPlugin(pathfinder);
 
     bot.on('physicTick', () => {
         const filter = entity => entity.type === 'mob' && (entity.displayName === 'Zombie' || entity.displayName === 'Creeper' || entity.displayName === 'Skeleton' || entity.displayName === 'Spider');
