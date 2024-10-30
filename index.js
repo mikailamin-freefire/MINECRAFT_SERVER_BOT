@@ -10,9 +10,9 @@ const AutoAuth = require('mineflayer-auto-auth');
 const app = express();
 app.use(express.json());
 
-const server_ip = 'mikailserver.aternos.me';
-const server_port = 30505;
-const bot_username = 'Minecraft_AI';
+const server_ip = 'ew_mc.aternos.me';
+const server_port = 40669;
+const bot_username = 'AI_MANAGER';
 
 function initialize_bot() {
     const bot = mineflayer.createBot({
