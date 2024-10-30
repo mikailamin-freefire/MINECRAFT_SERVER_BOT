@@ -17,7 +17,7 @@ const bot_username = 'AI_MANAGER';
 function initialize_bot() {
     const bot = mineflayer.createBot({
         host: server_ip, 
-        version: false,
+        version: '1.19.4',
         username: bot_username,
         port: server_port,
         plugins: [AutoAuth],
@@ -35,8 +35,13 @@ function initialize_bot() {
 
     bot.on('login', (spawn) => {
         console.log("Congratulations, your bot has been logged in to the server!");
-        app.get("/", (_, res) => res.send("Your bot has now live"));
+        app.get("/", (_, res) => res.send("Your bot has now live!"));
         app.listen(process.env.PORT);
+    });
+
+    bot.on('error', (error) => {
+        console.warn("Something was wrong!");
+        bot.quit("error");
     });
 
     bot.on('end', (reason) => {
